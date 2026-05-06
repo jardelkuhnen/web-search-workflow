@@ -1,0 +1,26 @@
+groups:
+  ecommerce:
+    - mercadolivre.com.br
+    - amazon.com.br
+    - shopee.com.br
+    - americanas.com.br
+
+  news:
+    - g1.globo.com
+    - folha.uol.com.br
+    - uol.com.br
+    - bbc.com/portuguese
+
+  tech:
+    - tecnoblog.net
+    - tudocelular.com
+    - canaltech.com.br
+    - tecmundo.com.br
+
+  research:
+    - scholar.google.com
+    - arxiv.org
+    - pubmed.ncbi.nlm.nih.gov
+
+  reddit:
+    - reddit.com
