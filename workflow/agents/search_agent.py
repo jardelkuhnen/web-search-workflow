@@ -22,9 +22,9 @@ def search_agent(state: WorkflowState) -> dict:
     timeline_events: list[TimelineEvent] = []
     raw_results: list[RawResult] = []
 
-    # Record workflow start event (if first agent)
-    if not state.get("workflow_start"):
-        timeline_events.append(_event("Search Agent", "Início do workflow", query=query))
+    timeline_events.append(
+        _event("Search Agent", "Cache insuficiente — busca na web acionada", query=query)
+    )
 
     if sites:
         # Per-site searches
@@ -95,6 +95,7 @@ def search_agent(state: WorkflowState) -> dict:
 
     return {
         "raw_results": raw_results,
+        "web_searched": True,
         "timeline": timeline_events,
         "workflow_start": state.get("workflow_start") or datetime.now(timezone.utc).isoformat(),
     }
