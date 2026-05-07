@@ -17,6 +17,9 @@ langchain-google-genai==4.2.2    # Alternativa: SDK nativo do Google (requer grp
 # --- Busca ---
 tavily-python==0.7.24
 
+# --- Vector store ---
+chromadb>=0.6.0
+
 # --- LLM / Google ---
 openai==2.34.0
 google-genai==1.75.0
