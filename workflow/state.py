@@ -47,3 +47,4 @@ class WorkflowState(TypedDict):
     # Runtime
     errors: Annotated[list[str], operator.add]
     workflow_start: str | None
+    persisted_count: int

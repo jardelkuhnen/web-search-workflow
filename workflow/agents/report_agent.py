@@ -15,8 +15,12 @@ def report_agent(state: WorkflowState) -> dict:
     ranked_results = state.get("ranked_results", [])
     timeline = state.get("timeline", [])
 
-    # Generate filename
-    now = datetime.now()
+    # Generate filename using the workflow start time (when the search was initiated)
+    workflow_start = state.get("workflow_start")
+    if workflow_start:
+        now = datetime.fromisoformat(workflow_start).astimezone()
+    else:
+        now = datetime.now()
     filename = f"search/search_{now.strftime('%Y%m%d_%H%M%S')}.html"
     output_path = os.path.join(os.getcwd(), filename)
 
