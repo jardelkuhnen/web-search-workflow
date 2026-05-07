@@ -44,6 +44,10 @@ class WorkflowState(TypedDict):
     timeline: Annotated[list[TimelineEvent], operator.add]
     html_path: str | None
 
+    # Cache control
+    web_searched: bool
+    cache_hit: bool | None
+
     # Runtime
     errors: Annotated[list[str], operator.add]
     workflow_start: str | None

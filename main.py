@@ -119,6 +119,8 @@ Exemplos:
         "ranked_results": [],
         "timeline": [],
         "html_path": None,
+        "web_searched": False,
+        "cache_hit": None,
         "errors": [],
         "workflow_start": None,
     }

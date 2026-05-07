@@ -4,7 +4,7 @@ from uuid import uuid4
 import chromadb
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-from workflow.state import RankedResult
+from workflow.state import RankedResult, RawResult
 
 
 class VectorStore:
@@ -49,3 +49,50 @@ class VectorStore:
         )
 
         return len(results)
+
+    def query_results(
+        self,
+        query: str,
+        embeddings: GoogleGenerativeAIEmbeddings,
+        n_results: int = 5,
+        sites: list[str] | None = None,
+    ) -> list[RawResult]:
+        """Busca semântica no ChromaDB com filtro opcional de sites."""
+        vector = embeddings.embed_query(query)
+
+        where: dict | None = None
+        if sites:
+            if len(sites) == 1:
+                where = {"site": {"$eq": sites[0]}}
+            else:
+                where = {"$or": [{"site": {"$eq": s}} for s in sites]}
+
+        try:
+            results = self._collection.query(
+                query_embeddings=[vector],
+                n_results=n_results,
+                where=where,
+                include=["documents", "metadatas"],
+            )
+        except Exception:
+            return []
+
+        docs = results.get("documents", [[]])[0]
+        metas = results.get("metadatas", [[]])[0]
+
+        raw: list[RawResult] = []
+        for doc, meta in zip(docs, metas):
+            stored_query = meta.get("query", "")
+            prefix = f"{stored_query}\n"
+            content = doc[len(prefix):] if doc.startswith(prefix) else doc
+            raw.append(
+                RawResult(
+                    title=meta.get("title", ""),
+                    url=meta.get("url", ""),
+                    content=content,
+                    site=meta.get("site") or None,
+                    published_date=None,
+                )
+            )
+
+        return raw
