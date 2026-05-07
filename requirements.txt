@@ -2,8 +2,10 @@
 # Gerado em 2026-05-06 | Python 3.12
 #
 # Instalação:
-#   uv venv .venv && uv pip install -r requirements.txt
-#   ou: python -m pip install -r requirements.txt
+#   python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+#   ou: make setup
+
+--index-url https://pypi.org/simple/
 
 # --- Core do workflow ---
 langgraph==1.1.10
